@@ -37,8 +37,8 @@ jobs:
 
     - name: Run tests and generate JUnit report
       run: |
-        go install github.com/jstemmer/go-junit-report/v2@latest
-        go test ./... -v 2>&1 | go-junit-report > report.xml
+        go install gotest.tools/gotestsum@latest
+        gotestsum --junitfile report.xml --format short-verbose ./...
 
     - name: Upload test results
       uses: actions/upload-artifact@v3
@@ -51,4 +51,4 @@ jobs:
       with:
         name: Go Tests
         path: report.xml
-        reporter: junit
+        reporter: go-test
