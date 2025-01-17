@@ -1,10 +1,10 @@
 package tests
 
 import (
+	. "MyRestyTesty/entities"
 	"encoding/json"
 	"github.com/go-resty/resty/v2"
 	"log"
-	"sync"
 	"testing"
 	"time"
 )
@@ -14,6 +14,7 @@ const (
 	AuthPath    = "/auth"
 	PingPath    = "/ping"
 	BookingPath = "/booking"
+	Slash       = "/"
 
 	Cookie          = "Cookie"
 	ContentType     = "Content-Type"
@@ -22,13 +23,12 @@ const (
 )
 
 var (
-	Body = map[string]string{
+	body = map[string]string{
 		"username": "admin",
 		"password": "password123",
 	}
 
-	TokenInstance *Token
-	once          sync.Once
+	tokenInstance *Token
 )
 
 func newRestyClient() *resty.Client {
@@ -43,21 +43,21 @@ func errHandle(t *testing.T, format string, err error) {
 	}
 }
 
-func GetToken() *Token {
-	once.Do(func() {
+func getToken() *Token {
+	if tokenInstance == nil {
 		resp, err := newRestyClient().R().
 			SetHeader("Content-Type", "application/json").
-			SetBody(Body).
+			SetBody(body).
 			Post(BaseURL + AuthPath)
-
 		if err != nil {
 			log.Fatalf("Can not obtain Token: %v", err)
 		}
 
-		err = json.Unmarshal(resp.Body(), &TokenInstance)
+		err = json.Unmarshal(resp.Body(), &tokenInstance)
 		if err != nil {
 			log.Fatalf("Can not parse Token: %v", err)
 		}
-	})
-	return TokenInstance
+	}
+
+	return tokenInstance
 }
