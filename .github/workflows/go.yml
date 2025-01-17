@@ -35,5 +35,20 @@ jobs:
       with:
         go-version: ${{ env.GO_VERSION }}
 
-    - name: Test
-      run: go test -v ./...
+    - name: Run tests and generate JUnit report
+      run: |
+        go install github.com/jstemmer/go-junit-report/v2@latest
+        go test ./... -v 2>&1 | go-junit-report > report.xml
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: report.xml
+
+    - name: Publish test results to GitHub
+      uses: dorny/test-reporter@v1
+      with:
+        name: Go Tests
+        path: report.xml
+        reporter: junit
