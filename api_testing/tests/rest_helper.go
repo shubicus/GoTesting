@@ -1,7 +1,7 @@
 package tests
 
 import (
-	. "MyRestyTesty/entities"
+	. "api_testing/entities"
 	"encoding/json"
 	"github.com/go-resty/resty/v2"
 	"log"

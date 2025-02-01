@@ -1,7 +1,7 @@
 package tests
 
 import (
-	. "MyRestyTesty/entities"
+	. "api_testing/entities"
 	"encoding/json"
 	"github.com/stretchr/testify/assert"
 	"github.com/tidwall/gjson"
@@ -15,6 +15,7 @@ var bookingId string
 const Format = "Request has failed: %v"
 
 func TestSuit(t *testing.T) {
+	// If the server is not running, the test will be stopped
 	healthCheck()
 
 	t.Run("Test01CreateToken", func(t *testing.T) {
@@ -111,7 +112,7 @@ func healthCheck() {
 		log.Fatalf(Format, err)
 	}
 
-	if resp.StatusCode() != 201 {
-		log.Fatalf("Actual Response StatusCode is: %v", resp.StatusCode())
+	if resp.StatusCode() != 20 {
+		log.Fatalf("Health check Failed.\nThe Actual Response StatusCode is: %v", resp.StatusCode())
 	}
 }
