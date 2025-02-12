@@ -21,10 +21,10 @@ jobs:
           go-version: ${{ env.GO_VERSION }}
 
       - name: Build
-        run: go build -v ./api
+        run: go build -v ./../api
 
       - name: Build
-        run: go build -v ./bdd
+        run: go build -v ./../bdd
 
   test:
     runs-on: ubuntu-latest
