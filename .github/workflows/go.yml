@@ -1,4 +1,4 @@
-name: GoTestingREST
+name: GoTesting
 
 on:
   push:
@@ -43,7 +43,7 @@ jobs:
       - name: Run Tests for Module api
         run: |
           cd ./api/tests
-          go test ./api/tests
+          go test
 
 #      - name: Run Tests for Module bdd
 #        run: |
