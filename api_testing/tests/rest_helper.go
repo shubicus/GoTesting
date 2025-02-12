@@ -4,13 +4,14 @@ import (
 	. "api_testing/entities"
 	"encoding/json"
 	"github.com/go-resty/resty/v2"
+	"github.com/joho/godotenv"
 	"log"
+	"os"
 	"testing"
 	"time"
 )
 
 const (
-	BaseURL     = "https://restful-booker.herokuapp.com"
 	AuthPath    = "/auth"
 	PingPath    = "/ping"
 	BookingPath = "/booking"
@@ -23,13 +24,28 @@ const (
 )
 
 var (
-	body = map[string]string{
+	BaseURL = ""
+	body    = map[string]string{
 		"username": "admin",
 		"password": "password123",
 	}
-
 	tokenInstance *Token
 )
+
+func init() {
+	pwd, err := os.Getwd()
+	if err != nil {
+		log.Panicf("Error getting WorkDirectory: %s", err)
+	}
+
+	err = godotenv.Load(pwd + "/../.env")
+
+	if err != nil {
+		log.Panicf("Error loading .env file: %s", err)
+	}
+
+	BaseURL = os.Getenv("BASE_URL")
+}
 
 func newRestyClient() *resty.Client {
 	return resty.New().

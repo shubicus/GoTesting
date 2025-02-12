@@ -112,7 +112,7 @@ func healthCheck() {
 		log.Fatalf(Format, err)
 	}
 
-	if resp.StatusCode() != 20 {
+	if resp.StatusCode() != 201 {
 		log.Fatalf("Health check Failed.\nThe Actual Response StatusCode is: %v", resp.StatusCode())
 	}
 }
