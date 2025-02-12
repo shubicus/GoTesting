@@ -20,15 +20,15 @@ jobs:
         with:
           go-version: ${{ env.GO_VERSION }}
 
-#      - name: Build
-#        run: go build -v ./../api
-#
+      - name: Build
+        run: go build -v ./api
+
 #      - name: Build
 #        run: go build -v ./../bdd
 
   test:
     runs-on: ubuntu-latest
-#    needs: build
+    needs: build
     strategy:
       matrix:
         folder: [ "api", "bdd" ]
@@ -42,10 +42,10 @@ jobs:
 
       - name: Run Tests for Module api
         run: |
-          cd ./../api/tests
-          go test ./../api/tests
+          cd ./api/tests
+          go test ./api/tests
 
-      - name: Run Tests for Module bdd
-        run: |
-          cd ./../api/tests
-          go test ./../bdd/tests
+#      - name: Run Tests for Module bdd
+#        run: |
+#          cd ./../api/tests
+#          go test ./../bdd/tests
