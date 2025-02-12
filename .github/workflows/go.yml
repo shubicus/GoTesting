@@ -43,9 +43,9 @@ jobs:
       - name: Run Tests for Module api
         run: |
           cd module1
-          go test ./api
+          go test ./api/tests
 
       - name: Run Tests for Module bdd
         run: |
           cd module2
-          go test ./bdd
+          go test ./bdd/tests

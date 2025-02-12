@@ -1,6 +1,7 @@
-package main
+package tests
 
 import (
+	"bdd"
 	"encoding/json"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -15,11 +16,11 @@ func TestBooks(t *testing.T) {
 }
 
 var _ = Describe("Verify Starships endpoint", Ordered, func() {
-	var root *Root
+	var root *main.Root
 
 	BeforeAll(func() {
-		resp, err := newRestyClient().R().Get(BaseURL)
-		errHandleFatalf(Format, err)
+		resp, err := main.newRestyClient().R().Get(main.BaseURL)
+		main.errHandleFatalf(main.Format, err)
 		if err := json.Unmarshal(resp.Body(), &root); err != nil {
 			log.Fatalf("Error parsing JSON: %v", err)
 		}
@@ -29,8 +30,8 @@ var _ = Describe("Verify Starships endpoint", Ordered, func() {
 		var respBody string
 
 		BeforeAll(func() {
-			resp, err := newRestyClient().R().Get(root.Films)
-			errHandleFatalf(Format, err)
+			resp, err := main.newRestyClient().R().Get(root.Films)
+			main.errHandleFatalf(main.Format, err)
 			respBody = resp.String()
 		})
 
@@ -56,8 +57,8 @@ var _ = Describe("Verify Starships endpoint", Ordered, func() {
 		Context("when searching name [Chewbacca]", func() {
 
 			BeforeAll(func() {
-				resp, err := newRestyClient().R().Get(root.People + "?search=Chewbacca")
-				errHandleFatalf(Format, err)
+				resp, err := main.newRestyClient().R().Get(root.People + "?search=Chewbacca")
+				main.errHandleFatalf(main.Format, err)
 				respBody = resp.String()
 			})
 
