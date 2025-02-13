@@ -34,12 +34,12 @@ jobs:
         with:
           go-version: ${{ env.GO_VERSION }}
 
-      - name: Run Tests for Module [API]
+      - name: Run Tests for Module [${{ matrix.folder }}]
         run: |
-          cd ./api/tests
-          go test
+          cd ./${{ matrix.folder }}/tests
+          go test -v
 
-      - name: Run Tests for Module [BDD]
-        run: |
-          cd ./bdd/tests
-          go test
+#      - name: Run Tests for Module [${{ matrix.folder }}]
+#        run: |
+#          cd ./${{ matrix.folder }}/tests
+#          go test
