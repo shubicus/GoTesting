@@ -1,10 +1,11 @@
-package main
+package bdd
 
 import (
 	"github.com/go-resty/resty/v2"
 	"github.com/joho/godotenv"
 	"log"
 	"os"
+	"path/filepath"
 	"time"
 )
 
@@ -18,7 +19,8 @@ func init() {
 		log.Panicf("Error getting WorkDirectory: %s", err)
 	}
 
-	err = godotenv.Load(pwd + "/.env")
+	dir := filepath.Dir(pwd)
+	err = godotenv.Load(dir + "/.env")
 
 	if err != nil {
 		log.Panicf("Error loading .env file: %s", err)
@@ -27,13 +29,13 @@ func init() {
 	BaseURL = os.Getenv("BASE_URL")
 }
 
-func newRestyClient() *resty.Client {
+func NewRestyClient() *resty.Client {
 	return resty.New().
 		SetRetryWaitTime(5 * time.Second).
 		EnableTrace()
 }
 
-func errHandleFatalf(format string, err error) {
+func ErrHandleFatalf(format string, err error) {
 	if err != nil {
 		log.Fatalf(format, err)
 	}

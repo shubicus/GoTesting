@@ -16,11 +16,11 @@ func TestBooks(t *testing.T) {
 }
 
 var _ = Describe("Verify Starships endpoint", Ordered, func() {
-	var root *main.Root
+	var root *bdd.Root
 
 	BeforeAll(func() {
-		resp, err := main.newRestyClient().R().Get(main.BaseURL)
-		main.errHandleFatalf(main.Format, err)
+		resp, err := bdd.NewRestyClient().R().Get(bdd.BaseURL)
+		bdd.ErrHandleFatalf(bdd.Format, err)
 		if err := json.Unmarshal(resp.Body(), &root); err != nil {
 			log.Fatalf("Error parsing JSON: %v", err)
 		}
@@ -30,8 +30,8 @@ var _ = Describe("Verify Starships endpoint", Ordered, func() {
 		var respBody string
 
 		BeforeAll(func() {
-			resp, err := main.newRestyClient().R().Get(root.Films)
-			main.errHandleFatalf(main.Format, err)
+			resp, err := bdd.NewRestyClient().R().Get(root.Films)
+			bdd.ErrHandleFatalf(bdd.Format, err)
 			respBody = resp.String()
 		})
 
@@ -57,8 +57,8 @@ var _ = Describe("Verify Starships endpoint", Ordered, func() {
 		Context("when searching name [Chewbacca]", func() {
 
 			BeforeAll(func() {
-				resp, err := main.newRestyClient().R().Get(root.People + "?search=Chewbacca")
-				main.errHandleFatalf(main.Format, err)
+				resp, err := bdd.NewRestyClient().R().Get(root.People + "?search=Chewbacca")
+				bdd.ErrHandleFatalf(bdd.Format, err)
 				respBody = resp.String()
 			})
 
